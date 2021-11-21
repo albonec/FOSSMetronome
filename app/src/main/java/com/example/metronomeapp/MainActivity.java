@@ -1,6 +1,8 @@
 package com.example.metronomeapp;
 
 import android.os.Bundle;
+import android.widget.Button;
+import android.widget.EditText;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
@@ -14,11 +16,20 @@ import com.example.metronomeapp.databinding.ActivityMainBinding;
 
 public class MainActivity extends AppCompatActivity {
 
+    int bpm;
+
+    EditText TempoInput;
+
+    Button startBtn;
+    Button stopBtn;
+
     private ActivityMainBinding binding;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        TempoInput = (EditText) findViewById(R.id.TempoInput);
 
         binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
