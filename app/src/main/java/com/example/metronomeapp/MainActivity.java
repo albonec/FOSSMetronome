@@ -57,6 +57,7 @@ public class MainActivity extends AppCompatActivity {
         NavigationUI.setupActionBarWithNavController(this, navController, appBarConfiguration);
         NavigationUI.setupWithNavController(binding.navView, navController);
     }
+    //Debug method to show text when necessary
     private void showToast(String text) { Toast.makeText(MainActivity.this, text, Toast.LENGTH_SHORT).show(); }
 
 }
