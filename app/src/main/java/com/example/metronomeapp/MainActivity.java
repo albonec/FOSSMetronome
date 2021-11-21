@@ -1,8 +1,10 @@
 package com.example.metronomeapp;
 
 import android.os.Bundle;
+import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
@@ -16,7 +18,7 @@ import com.example.metronomeapp.databinding.ActivityMainBinding;
 
 public class MainActivity extends AppCompatActivity {
 
-    int bpm;
+    int tempo;
 
     EditText TempoInput;
 
@@ -31,6 +33,17 @@ public class MainActivity extends AppCompatActivity {
 
         TempoInput = (EditText) findViewById(R.id.TempoInput);
 
+        startBtn = (Button) findViewById(R.id.startButton);
+        stopBtn = (Button) findViewById(R.id.stopButton);
+
+        startBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                tempo = Integer.valueOf(TempoInput.getText().toString());
+                showToast(String.valueOf(tempo));
+            }
+        });
+
         binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
@@ -44,5 +57,6 @@ public class MainActivity extends AppCompatActivity {
         NavigationUI.setupActionBarWithNavController(this, navController, appBarConfiguration);
         NavigationUI.setupWithNavController(binding.navView, navController);
     }
+    private void showToast(String text) { Toast.makeText(MainActivity.this, text, Toast.LENGTH_SHORT).show(); }
 
 }
