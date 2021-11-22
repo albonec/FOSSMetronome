@@ -46,7 +46,7 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View v) {
                 tempo = Integer.valueOf(TempoInput.getText().toString());
                 showToast(String.valueOf(tempo));
-                while(true) {
+                while (true) {
                     mediaPlayer.start();
                     try {
                         TimeUnit.MICROSECONDS.sleep(calcInterval(tempo));
@@ -78,12 +78,18 @@ public class MainActivity extends AppCompatActivity {
     }
 
     //Debug function to show text when necessary
-    public void showToast(String text) { Toast.makeText(MainActivity.this, text, Toast.LENGTH_SHORT).show(); }
+    public void showToast(String text) {
+        Toast.makeText(MainActivity.this, text, Toast.LENGTH_SHORT).show();
+    }
 
     //calculates interval (in microseconds) at which to play the metronome tick based on tempo in BPM units.
     public long calcInterval(int tempo) {
-        double rawInterval = 60 / tempo;
-        long translatedInterval = Double.valueOf(1000000 * rawInterval).longValue();
-        return translatedInterval;
+        if (tempo <= 0) {
+            return -1;
+        } else {
+            double rawInterval = 60 / tempo;
+            long translatedInterval = Double.valueOf(1000000 * rawInterval).longValue();
+            return translatedInterval;
+        }
     }
 }
