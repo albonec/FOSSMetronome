@@ -41,6 +41,14 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View v) {
                 tempo = Integer.valueOf(TempoInput.getText().toString());
                 showToast(String.valueOf(tempo));
+                //add start code here
+            }
+        });
+
+        stopBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //add stop code here
             }
         });
 
