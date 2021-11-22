@@ -41,6 +41,14 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View v) {
                 tempo = Integer.valueOf(TempoInput.getText().toString());
                 showToast(String.valueOf(tempo));
+                //add start code here
+            }
+        });
+
+        stopBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //add stop code here
             }
         });
 
@@ -57,7 +65,7 @@ public class MainActivity extends AppCompatActivity {
         NavigationUI.setupActionBarWithNavController(this, navController, appBarConfiguration);
         NavigationUI.setupWithNavController(binding.navView, navController);
     }
-    //Debug method to show text when necessary
+    //Debug function to show text when necessary
     public void showToast(String text) { Toast.makeText(MainActivity.this, text, Toast.LENGTH_SHORT).show(); }
 
 }
