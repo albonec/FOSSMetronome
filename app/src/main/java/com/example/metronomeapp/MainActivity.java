@@ -1,5 +1,7 @@
 package com.example.metronomeapp;
 
+import java.util.concurrent.TimeUnit;
+
 import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.view.View;
@@ -32,25 +34,34 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        TempoInput = (EditText) findViewById(R.id.TempoInput);
+        TempoInput = findViewById(R.id.TempoInput);
 
-        startBtn = (Button) findViewById(R.id.startButton);
-        stopBtn = (Button) findViewById(R.id.stopButton);
+        startBtn = findViewById(R.id.startButton);
+        stopBtn = findViewById(R.id.stopButton);
 
-        //final MediaPlayer mediaPlayer = MediaPlayer.create(this);
+        final MediaPlayer mediaPlayer = MediaPlayer.create(this, R.raw.tick);
 
         startBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 tempo = Integer.valueOf(TempoInput.getText().toString());
                 showToast(String.valueOf(tempo));
+                while(true) {
+                    mediaPlayer.start();
+                    try {
+                        TimeUnit.MICROSECONDS.sleep(calcInterval(tempo));
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                    mediaPlayer.reset();
+                }
             }
         });
 
         stopBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //add stop code here
+                mediaPlayer.release();
             }
         });
 
@@ -69,9 +80,10 @@ public class MainActivity extends AppCompatActivity {
     //Debug function to show text when necessary
     public void showToast(String text) { Toast.makeText(MainActivity.this, text, Toast.LENGTH_SHORT).show(); }
 
-    //calculates interval at which to play the metronome tick based on tempo in BPM units.
-    public double calcInterval(int tempo) {
-        double interval = 60 / tempo;
-        return interval;
+    //calculates interval (in microseconds) at which to play the metronome tick based on tempo in BPM units.
+    public long calcInterval(int tempo) {
+        double rawInterval = 60 / tempo;
+        long translatedInterval = Double.valueOf(1000000 * rawInterval).longValue();
+        return translatedInterval;
     }
 }
