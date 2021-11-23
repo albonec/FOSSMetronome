@@ -35,31 +35,19 @@
 
     <Button
         android:id="@+id/startButton"
-        android:layout_width="137dp"
-        android:layout_height="220dp"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="520dp"
-        android:layout_marginEnd="258dp"
-        android:layout_marginBottom="73dp"
+        android:layout_width="116dp"
+        android:layout_height="171dp"
+        android:layout_marginStart="9dp"
+        android:layout_marginTop="471dp"
+        android:layout_marginEnd="286dp"
+        android:layout_marginBottom="89dp"
         android:text="Start"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <Button
-        android:id="@+id/stopButton"
-        android:layout_width="140dp"
-        android:layout_height="219dp"
-        android:layout_marginStart="255dp"
-        android:layout_marginTop="524dp"
-        android:layout_marginEnd="16dp"
-        android:layout_marginBottom="70dp"
-        android:text="Stop"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="1.0" />
 
     <EditText
         android:id="@+id/TempoInput"
@@ -92,5 +80,21 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
+    <Button
+        android:id="@+id/stopButton"
+        android:layout_width="109dp"
+        android:layout_height="166dp"
+        android:layout_marginStart="287dp"
+        android:layout_marginTop="474dp"
+        android:layout_marginEnd="15dp"
+        android:layout_marginBottom="91dp"
+        android:text="Stop"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="1.0" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

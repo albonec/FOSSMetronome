@@ -25,14 +25,17 @@ public class MainActivity extends AppCompatActivity {
 
     EditText TempoInput;
 
-    Button startBtn;
-    Button stopBtn;
+    Button startBtn, stopBtn;
+
+    boolean[] isStopButtonPressed = {false};
 
     private ActivityMainBinding binding;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
+        binding = ActivityMainBinding.inflate(getLayoutInflater());
 
         TempoInput = findViewById(R.id.TempoInput);
 
@@ -41,12 +44,17 @@ public class MainActivity extends AppCompatActivity {
 
         final MediaPlayer mediaPlayer = MediaPlayer.create(this, R.raw.tick);
 
-        startBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                tempo = Integer.valueOf(TempoInput.getText().toString());
-                showToast(String.valueOf(tempo));
-                while (true) {
+        stopBtn.setOnClickListener(v -> isStopButtonPressed[0] = true);
+
+        startBtn.setOnClickListener(v -> {
+            tempo = Integer.valueOf(TempoInput.getText().toString());
+            showToast(String.valueOf(tempo));
+
+            while (true) {
+                if (isStopButtonPressed[0]) {
+                    isStopButtonPressed[0] = false;
+                    break;
+                } else {
                     mediaPlayer.start();
                     try {
                         TimeUnit.MICROSECONDS.sleep(calcInterval(tempo));
@@ -57,16 +65,6 @@ public class MainActivity extends AppCompatActivity {
                 }
             }
         });
-
-        stopBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                mediaPlayer.release();
-            }
-        });
-
-        binding = ActivityMainBinding.inflate(getLayoutInflater());
-        setContentView(binding.getRoot());
 
         BottomNavigationView navView = findViewById(R.id.nav_view);
         // Passing each menu ID as a set of Ids because each
