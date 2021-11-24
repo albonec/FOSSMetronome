@@ -11,6 +11,7 @@ import android.widget.Toast;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
@@ -42,7 +43,7 @@ public class MainActivity extends AppCompatActivity {
         startBtn = findViewById(R.id.startButton);
         stopBtn = findViewById(R.id.stopButton);
 
-        final MediaPlayer mediaPlayer = MediaPlayer.create(this, R.raw.tick);
+        final MediaPlayer playTick = MediaPlayer.create(this, R.raw.tick);
 
         stopBtn.setOnClickListener(v -> isStopButtonPressed[0] = true);
 
@@ -55,13 +56,13 @@ public class MainActivity extends AppCompatActivity {
                     isStopButtonPressed[0] = false;
                     break;
                 } else {
-                    mediaPlayer.start();
+                    playTick.start();
                     try {
                         TimeUnit.MICROSECONDS.sleep(calcInterval(tempo));
                     } catch (InterruptedException e) {
                         e.printStackTrace();
                     }
-                    mediaPlayer.reset();
+                    playTick.reset();
                 }
             }
         });
@@ -81,7 +82,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     //calculates interval (in microseconds) at which to play the metronome tick based on tempo in BPM units.
-    public long calcInterval(int tempo) {
+    public long calcInterval(@NonNull int tempo) {
         if (tempo <= 0) {
             return -1;
         } else {
