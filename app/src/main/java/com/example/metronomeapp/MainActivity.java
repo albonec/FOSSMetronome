@@ -11,6 +11,7 @@ import android.widget.Toast;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
@@ -20,6 +21,10 @@ import androidx.navigation.ui.NavigationUI;
 import com.example.metronomeapp.databinding.ActivityMainBinding;
 
 public class MainActivity extends AppCompatActivity {
+
+    public MainActivity() {
+        super(R.layout.fragment_dashboard);
+    }
 
     int tempo;
 
@@ -42,9 +47,14 @@ public class MainActivity extends AppCompatActivity {
         startBtn = findViewById(R.id.startButton);
         stopBtn = findViewById(R.id.stopButton);
 
-        final MediaPlayer mediaPlayer = MediaPlayer.create(this, R.raw.tick);
+        final MediaPlayer playTick = MediaPlayer.create(this, R.raw.tick);
 
-        stopBtn.setOnClickListener(v -> isStopButtonPressed[0] = true);
+        stopBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                isStopButtonPressed[0] = true;
+            }
+        });
 
         startBtn.setOnClickListener(v -> {
             tempo = Integer.valueOf(TempoInput.getText().toString());
@@ -55,13 +65,13 @@ public class MainActivity extends AppCompatActivity {
                     isStopButtonPressed[0] = false;
                     break;
                 } else {
-                    mediaPlayer.start();
+                    playTick.start();
                     try {
                         TimeUnit.MICROSECONDS.sleep(calcInterval(tempo));
                     } catch (InterruptedException e) {
                         e.printStackTrace();
                     }
-                    mediaPlayer.reset();
+                    playTick.reset();
                 }
             }
         });
@@ -70,9 +80,6 @@ public class MainActivity extends AppCompatActivity {
         // Passing each menu ID as a set of Ids because each
         // menu should be considered as top level destinations.
         AppBarConfiguration appBarConfiguration = new AppBarConfiguration.Builder(R.id.navigation_home, R.id.navigation_dashboard, R.id.navigation_notifications).build();
-        NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment_activity_main);
-        NavigationUI.setupActionBarWithNavController(this, navController, appBarConfiguration);
-        NavigationUI.setupWithNavController(binding.navView, navController);
     }
 
     //Debug function to show text when necessary
