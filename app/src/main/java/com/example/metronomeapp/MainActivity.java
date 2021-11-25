@@ -49,7 +49,12 @@ public class MainActivity extends AppCompatActivity {
 
         final MediaPlayer playTick = MediaPlayer.create(this, R.raw.tick);
 
-        stopBtn.setOnClickListener(v -> isStopButtonPressed[0] = true);
+        stopBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                isStopButtonPressed[0] = true;
+            }
+        });
 
         startBtn.setOnClickListener(v -> {
             tempo = Integer.valueOf(TempoInput.getText().toString());
@@ -83,7 +88,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     //calculates interval (in microseconds) at which to play the metronome tick based on tempo in BPM units.
-    public long calcInterval(@NonNull int tempo) {
+    public long calcInterval(int tempo) {
         if (tempo <= 0) {
             return -1;
         } else {
