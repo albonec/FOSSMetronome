@@ -1,6 +1,5 @@
 package com.example.metronomeapp;
 
-import java.util.concurrent.TimeUnit;
 
 import android.media.MediaPlayer;
 import android.os.Bundle;
@@ -13,12 +12,12 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.navigation.NavController;
-import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
-import androidx.navigation.ui.NavigationUI;
 
 import com.example.metronomeapp.databinding.ActivityMainBinding;
+
+import java.io.IOException;
+import java.util.concurrent.TimeUnit;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -30,7 +29,7 @@ public class MainActivity extends AppCompatActivity {
 
     EditText TempoInput;
 
-    Button startBtn, stopBtn;
+    Button startStopBtn;
 
     boolean[] isStopButtonPressed = {false};
 
@@ -44,34 +43,54 @@ public class MainActivity extends AppCompatActivity {
 
         TempoInput = findViewById(R.id.TempoInput);
 
-        startBtn = findViewById(R.id.startButton);
-        stopBtn = findViewById(R.id.stopButton);
+        startStopBtn = findViewById(R.id.startStopButton);
 
-        final MediaPlayer playTick = MediaPlayer.create(this, R.raw.tick);
+        final MediaPlayer[] playTick = {MediaPlayer.create(this, R.raw.tick)};
 
-        stopBtn.setOnClickListener(new View.OnClickListener() {
+        final Runnable loopTick = new Runnable() {
             @Override
-            public void onClick(View v) {
-                isStopButtonPressed[0] = true;
+            public void run() {
+                if (playTick[0] != null) {
+                    if (playTick[0].isPlaying()) {
+                        playTick[0].stop();
+                    }
+                    playTick[0].start();
+                }
+            }
+        };
+
+        playTick[0].setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
+            @Override
+            public void onCompletion(MediaPlayer mp) {
+                startStopBtn.postDelayed(loopTick, calcInterval(tempo));
             }
         });
 
-        startBtn.setOnClickListener(v -> {
-            tempo = Integer.valueOf(TempoInput.getText().toString());
-            showToast(String.valueOf(tempo));
+        playTick[0].setOnErrorListener(new MediaPlayer.OnErrorListener() {
+            @Override
+            public boolean onError(MediaPlayer mp, int what, int extra) {
+                return true;
+            }
+        });
 
-            while (true) {
-                if (isStopButtonPressed[0]) {
-                    isStopButtonPressed[0] = false;
-                    break;
-                } else {
-                    playTick.start();
+        playTick[0].setLooping(true);
+
+        startStopBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (playTick[0] != null && playTick[0].isPlaying()) {
+                    playTick[0].stop();
+                    playTick[0].release();
+                    playTick[0] = null;
                     try {
-                        TimeUnit.MICROSECONDS.sleep(calcInterval(tempo));
-                    } catch (InterruptedException e) {
+                        playTick[0].prepare();
+                    } catch (IllegalStateException | IOException e) {
+                        // TODO Auto-generated catch block
                         e.printStackTrace();
                     }
-                    playTick.reset();
+
+                } else {
+                    loopTick.run();
                 }
             }
         });
@@ -93,7 +112,7 @@ public class MainActivity extends AppCompatActivity {
             return -1;
         } else {
             double rawInterval = 60 / tempo;
-            long translatedInterval = Double.valueOf(1000000 * rawInterval).longValue();
+            long translatedInterval = Double.valueOf(1000 * rawInterval).longValue();
             return translatedInterval;
         }
     }
