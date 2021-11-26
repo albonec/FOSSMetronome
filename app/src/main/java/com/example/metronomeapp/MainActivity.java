@@ -21,17 +21,15 @@ import java.util.concurrent.TimeUnit;
 
 public class MainActivity extends AppCompatActivity {
 
-    public MainActivity() {
-        super(R.layout.fragment_dashboard);
-    }
-
     int tempo;
 
     EditText TempoInput;
 
     Button startStopBtn;
 
-    boolean[] isStopButtonPressed = {false};
+    public MainActivity() {
+        super(R.layout.fragment_dashboard);
+    }
 
     private ActivityMainBinding binding;
 
@@ -50,21 +48,21 @@ public class MainActivity extends AppCompatActivity {
         final Runnable loopTick = new Runnable() {
             @Override
             public void run() {
+                tempo = Integer.valueOf(TempoInput.getText().toString());
                 if (playTick[0] != null) {
-                    if (playTick[0].isPlaying()) {
+                    if (!playTick[0].isPlaying()) {
+                        playTick[0].start();
+                        try {
+                            TimeUnit.MICROSECONDS.sleep(calcInterval(tempo));
+                        } catch (InterruptedException e) {
+                            e.printStackTrace();
+                        }
+                    } else {
                         playTick[0].stop();
                     }
-                    playTick[0].start();
                 }
             }
         };
-
-        playTick[0].setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
-            @Override
-            public void onCompletion(MediaPlayer mp) {
-                startStopBtn.postDelayed(loopTick, calcInterval(tempo));
-            }
-        });
 
         playTick[0].setOnErrorListener(new MediaPlayer.OnErrorListener() {
             @Override
@@ -106,13 +104,13 @@ public class MainActivity extends AppCompatActivity {
         Toast.makeText(MainActivity.this, text, Toast.LENGTH_SHORT).show();
     }
 
-    //calculates interval (in microseconds) at which to play the metronome tick based on tempo in BPM units.
+    //calculates interval (in milliseconds) at which to play the metronome tick based on tempo in BPM units.
     public long calcInterval(@NonNull int tempo) {
         if (tempo <= 0) {
-            return -1;
+            return 0;
         } else {
             double rawInterval = 60 / tempo;
-            long translatedInterval = Double.valueOf(1000 * rawInterval).longValue();
+            long translatedInterval = Double.valueOf(1000000 * rawInterval).longValue();
             return translatedInterval;
         }
     }
