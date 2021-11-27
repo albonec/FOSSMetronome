@@ -16,7 +16,7 @@ import androidx.navigation.ui.AppBarConfiguration;
 
 import com.example.metronomeapp.databinding.ActivityMainBinding;
 
-import java.io.IOException;
+import java.util.Timer;
 import java.util.concurrent.TimeUnit;
 
 public class MainActivity extends AppCompatActivity {
@@ -26,6 +26,8 @@ public class MainActivity extends AppCompatActivity {
     EditText TempoInput;
 
     Button startStopBtn;
+
+    boolean doRun, isClicked = true;
 
     public MainActivity() {
         super(R.layout.fragment_dashboard);
@@ -43,61 +45,28 @@ public class MainActivity extends AppCompatActivity {
 
         startStopBtn = findViewById(R.id.startStopButton);
 
-        final MediaPlayer[] playTick = {MediaPlayer.create(this, R.raw.tick)};
-
-        final Runnable loopTick = new Runnable() {
-            @Override
-            public void run() {
-                tempo = Integer.valueOf(TempoInput.getText().toString());
-                if (playTick[0] != null) {
-                    if (!playTick[0].isPlaying()) {
-                        playTick[0].start();
-                        try {
-                            TimeUnit.MICROSECONDS.sleep(calcInterval(tempo));
-                        } catch (InterruptedException e) {
-                            e.printStackTrace();
-                        }
-                    } else {
-                        playTick[0].stop();
-                    }
-                }
-            }
-        };
-
-        playTick[0].setOnErrorListener(new MediaPlayer.OnErrorListener() {
-            @Override
-            public boolean onError(MediaPlayer mp, int what, int extra) {
-                return true;
-            }
-        });
-
-        playTick[0].setLooping(true);
-
-        startStopBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (playTick[0] != null && playTick[0].isPlaying()) {
-                    playTick[0].stop();
-                    playTick[0].release();
-                    playTick[0] = null;
-                    try {
-                        playTick[0].prepare();
-                    } catch (IllegalStateException | IOException e) {
-                        // TODO Auto-generated catch block
-                        e.printStackTrace();
-                    }
-
-                } else {
-                    loopTick.run();
-                }
-            }
-        });
+        final MediaPlayer playTick = MediaPlayer.create(this, R.raw.tick);
 
         BottomNavigationView navView = findViewById(R.id.nav_view);
         // Passing each menu ID as a set of Ids because each
         // menu should be considered as top level destinations.
         AppBarConfiguration appBarConfiguration = new AppBarConfiguration.Builder(R.id.navigation_home, R.id.navigation_dashboard, R.id.navigation_notifications).build();
-    }
+
+        startStopBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                    while(true) {
+                        tempo = Integer.valueOf(TempoInput.getText().toString());
+                        playTick.start();
+                        try {
+                            sleep(calcInterval(tempo));
+                        } catch (InterruptedException e) {
+                            e.printStackTrace();
+                        }
+                    }
+            }
+        });
+        }
 
     //Debug function to show text when necessary
     public void showToast(String text) {
@@ -110,8 +79,25 @@ public class MainActivity extends AppCompatActivity {
             return 0;
         } else {
             double rawInterval = 60 / tempo;
-            long translatedInterval = Double.valueOf(1000000 * rawInterval).longValue();
+            long translatedInterval = Double.valueOf(1000 * rawInterval).longValue();
             return translatedInterval;
         }
+    }
+    public static void sleep (long nanoDuration) throws InterruptedException {
+        final long end = System.nanoTime() + nanoDuration;
+
+        final long SLEEP_PRECISION = TimeUnit.MILLISECONDS.toNanos(1);
+        final long SPIN_YIELD_PRECISION = TimeUnit.MILLISECONDS.toNanos(1);
+
+        long timeLeft = nanoDuration;
+        do {
+            if (timeLeft > SLEEP_PRECISION)
+                Thread.sleep (1);
+            else
+            if (timeLeft > SPIN_YIELD_PRECISION)
+                Thread.yield();
+
+            timeLeft = end - System.nanoTime();
+        } while (timeLeft > 0);
     }
 }
