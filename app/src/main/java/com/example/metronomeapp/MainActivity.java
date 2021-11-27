@@ -3,6 +3,7 @@ package com.example.metronomeapp;
 
 import android.media.MediaPlayer;
 import android.os.Bundle;
+import android.os.SystemClock;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -58,11 +59,7 @@ public class MainActivity extends AppCompatActivity {
                     while(true) {
                         tempo = Integer.valueOf(TempoInput.getText().toString());
                         playTick.start();
-                        try {
-                            sleep(calcInterval(tempo));
-                        } catch (InterruptedException e) {
-                            e.printStackTrace();
-                        }
+                        SystemClock.sleep(calcInterval(tempo));
                     }
             }
         });
@@ -82,22 +79,5 @@ public class MainActivity extends AppCompatActivity {
             long translatedInterval = Double.valueOf(1000 * rawInterval).longValue();
             return translatedInterval;
         }
-    }
-    public static void sleep (long nanoDuration) throws InterruptedException {
-        final long end = System.nanoTime() + nanoDuration;
-
-        final long SLEEP_PRECISION = TimeUnit.MILLISECONDS.toNanos(1);
-        final long SPIN_YIELD_PRECISION = TimeUnit.MILLISECONDS.toNanos(1);
-
-        long timeLeft = nanoDuration;
-        do {
-            if (timeLeft > SLEEP_PRECISION)
-                Thread.sleep (1);
-            else
-            if (timeLeft > SPIN_YIELD_PRECISION)
-                Thread.yield();
-
-            timeLeft = end - System.nanoTime();
-        } while (timeLeft > 0);
     }
 }
