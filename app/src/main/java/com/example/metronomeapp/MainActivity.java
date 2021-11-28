@@ -76,8 +76,12 @@ public class MainActivity extends AppCompatActivity {
             return 0;
         } else {
             double rawInterval = 60 / tempo;
-            long translatedInterval = Double.valueOf(1000 * rawInterval).longValue();
-            return translatedInterval;
+            long translatedInterval = Double.valueOf((1000 * rawInterval)).longValue();
+            if (translatedInterval < 1) {
+                return 1;
+            } else {
+                return translatedInterval;
+            }
         }
     }
 }
