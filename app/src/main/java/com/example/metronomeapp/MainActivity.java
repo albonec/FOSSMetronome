@@ -25,8 +25,6 @@ public class MainActivity extends AppCompatActivity {
 
     Button startStopBtn;
 
-    final MediaPlayer playTick = MediaPlayer.create(this, R.raw.tick);
-
     boolean doRun, isClicked = true;
 
     public MainActivity() {
@@ -44,6 +42,8 @@ public class MainActivity extends AppCompatActivity {
         TempoInput = findViewById(R.id.TempoInput);
 
         startStopBtn = findViewById(R.id.startStopButton);
+
+        final MediaPlayer playTick = MediaPlayer.create(this, R.raw.tick);
 
         BottomNavigationView navView = findViewById(R.id.nav_view);
         // Passing each menu ID as a set of Ids because each
@@ -72,6 +72,5 @@ public class MainActivity extends AppCompatActivity {
     public float calcInterval(float tempo) {
         return (60/tempo) * (1000);
     }
-
 }
 
