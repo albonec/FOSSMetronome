@@ -11,14 +11,11 @@ import android.widget.Toast;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.navigation.ui.AppBarConfiguration;
 
 import com.example.metronomeapp.databinding.ActivityMainBinding;
 
-import java.util.Timer;
-import java.util.concurrent.TimeUnit;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -27,6 +24,8 @@ public class MainActivity extends AppCompatActivity {
     EditText TempoInput;
 
     Button startStopBtn;
+
+    final MediaPlayer playTick = MediaPlayer.create(this, R.raw.tick);
 
     boolean doRun, isClicked = true;
 
@@ -46,8 +45,6 @@ public class MainActivity extends AppCompatActivity {
 
         startStopBtn = findViewById(R.id.startStopButton);
 
-        final MediaPlayer playTick = MediaPlayer.create(this, R.raw.tick);
-
         BottomNavigationView navView = findViewById(R.id.nav_view);
         // Passing each menu ID as a set of Ids because each
         // menu should be considered as top level destinations.
@@ -56,14 +53,15 @@ public class MainActivity extends AppCompatActivity {
         startStopBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                    while(true) {
-                        tempo = Integer.valueOf(TempoInput.getText().toString());
-                        playTick.start();
-                        SystemClock.sleep(calcInterval(tempo));
-                    }
+                while (true) {
+                    tempo = Integer.valueOf(TempoInput.getText().toString());
+                    playTick.start();
+                    SystemClock.sleep((long)calcInterval(tempo));
+                    //showToast(String.valueOf(calcInterval(tempo)));
+                }
             }
         });
-        }
+    }
 
     //Debug function to show text when necessary
     public void showToast(String text) {
@@ -71,17 +69,9 @@ public class MainActivity extends AppCompatActivity {
     }
 
     //calculates interval (in milliseconds) at which to play the metronome tick based on tempo in BPM units.
-    public long calcInterval(@NonNull int tempo) {
-        if (tempo <= 0) {
-            return 0;
-        } else {
-            double rawInterval = 60 / tempo;
-            long translatedInterval = Double.valueOf((1000 * rawInterval)).longValue();
-            if (translatedInterval < 1) {
-                return 1;
-            } else {
-                return translatedInterval;
-            }
-        }
+    public float calcInterval(float tempo) {
+        return (60/tempo) * (1000);
     }
+
 }
+
