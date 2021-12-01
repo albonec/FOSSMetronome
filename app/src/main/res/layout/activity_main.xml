@@ -7,6 +7,22 @@
     android:layout_height="match_parent"
     android:paddingTop="?attr/actionBarSize">
 
+    <Button
+        android:id="@+id/stopButton"
+        android:layout_width="120dp"
+        android:layout_height="219dp"
+        android:layout_marginStart="275dp"
+        android:layout_marginTop="499dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginBottom="13dp"
+        android:text="Stop"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="1.0" />
+
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/nav_view"
         android:layout_width="0dp"
@@ -20,16 +36,17 @@
         app:menu="@menu/bottom_nav_menu" />
 
     <Button
-        android:id="@+id/startStopButton"
-        android:layout_width="389dp"
+        android:id="@+id/startButton"
+        android:layout_width="120dp"
         android:layout_height="219dp"
-        android:layout_marginStart="11dp"
+        android:layout_marginStart="16dp"
         android:layout_marginTop="499dp"
-        android:layout_marginEnd="11dp"
+        android:layout_marginEnd="275dp"
         android:layout_marginBottom="13dp"
-        android:text="Start/Stop"
+        android:text="Start"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="1.0" />

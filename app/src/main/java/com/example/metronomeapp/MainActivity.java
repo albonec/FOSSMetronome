@@ -24,7 +24,7 @@ public class MainActivity extends AppCompatActivity {
 
     EditText TempoInput;
 
-    Button startStopBtn;
+    Button startBtn, stopBtn;
 
     boolean doRun, isClicked = true;
 
@@ -42,7 +42,8 @@ public class MainActivity extends AppCompatActivity {
 
         TempoInput = findViewById(R.id.TempoInput);
 
-        startStopBtn = findViewById(R.id.startStopButton);
+        startBtn = findViewById(R.id.startButton);
+        stopBtn = findViewById(R.id.stopButton);
 
         final MediaPlayer playTick = MediaPlayer.create(this, R.raw.tick);
 
@@ -51,10 +52,11 @@ public class MainActivity extends AppCompatActivity {
         // menu should be considered as top level destinations.
         AppBarConfiguration appBarConfiguration = new AppBarConfiguration.Builder(R.id.navigation_home, R.id.navigation_dashboard, R.id.navigation_notifications).build();
 
-        startStopBtn.setOnClickListener(new View.OnClickListener() {
+        startBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                while (true) {
+                isClicked = false;
+                while (!isClicked) {
                     tempo = Integer.valueOf(TempoInput.getText().toString());
                     playTick.start();
                     SystemClock.sleep((long) calcInterval(tempo));
@@ -62,6 +64,14 @@ public class MainActivity extends AppCompatActivity {
                 }
             }
         });
+
+        stopBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                isClicked = true;
+            }
+        });
+
     }
 
     //Debug function to show text when necessary
