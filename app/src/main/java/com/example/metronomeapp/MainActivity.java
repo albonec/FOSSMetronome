@@ -11,6 +11,7 @@ import android.widget.Toast;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.navigation.ui.AppBarConfiguration;
 
@@ -56,7 +57,7 @@ public class MainActivity extends AppCompatActivity {
                 while (true) {
                     tempo = Integer.valueOf(TempoInput.getText().toString());
                     playTick.start();
-                    SystemClock.sleep((long)calcInterval(tempo));
+                    SystemClock.sleep((long) calcInterval(tempo));
                     //showToast(String.valueOf(calcInterval(tempo)));
                 }
             }
@@ -69,8 +70,16 @@ public class MainActivity extends AppCompatActivity {
     }
 
     //calculates interval (in milliseconds) at which to play the metronome tick based on tempo in BPM units.
-    public float calcInterval(float tempo) {
-        return (60/tempo) * (1000);
+    public float calcInterval(@NonNull float tempo) {
+        if (tempo >= 100) {
+            if (((60 / tempo) * 1000) <= 0) {
+                return 0;
+            } else {
+                return ((60 / tempo) * 1000) - 10;
+            }
+        } else {
+            return (60 / tempo) * 1000;
+        }
     }
 }
 
