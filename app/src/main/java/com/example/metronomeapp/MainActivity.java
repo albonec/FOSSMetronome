@@ -3,11 +3,14 @@ package com.example.metronomeapp;
 
 import android.media.MediaPlayer;
 import android.os.Bundle;
+import android.os.Handler;
 import android.os.SystemClock;
 import android.view.View;
 import android.widget.Button;
+import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.Toast;
+import android.widget.ToggleButton;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
@@ -24,13 +27,17 @@ public class MainActivity extends AppCompatActivity {
 
     EditText TempoInput;
 
-    Button startBtn, stopBtn;
+    ToggleButton startStopBtn;
 
-    boolean doRun, isClicked = true;
+    boolean doRun = false;
+
+    private Handler handler = new Handler();
 
     public MainActivity() {
         super(R.layout.fragment_dashboard);
     }
+
+    final MediaPlayer playTick = MediaPlayer.create(this, R.raw.tick);
 
     private ActivityMainBinding binding;
 
@@ -40,35 +47,21 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         binding = ActivityMainBinding.inflate(getLayoutInflater());
 
-        TempoInput = findViewById(R.id.TempoInput);
-
-        startBtn = findViewById(R.id.startButton);
-        stopBtn = findViewById(R.id.stopButton);
-
-        final MediaPlayer playTick = MediaPlayer.create(this, R.raw.tick);
+        startStopBtn = findViewById(R.id.startStopBtn);
 
         BottomNavigationView navView = findViewById(R.id.nav_view);
         // Passing each menu ID as a set of Ids because each
         // menu should be considered as top level destinations.
         AppBarConfiguration appBarConfiguration = new AppBarConfiguration.Builder(R.id.navigation_home, R.id.navigation_dashboard, R.id.navigation_notifications).build();
 
-        startBtn.setOnClickListener(new View.OnClickListener() {
+        startStopBtn.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
-            public void onClick(View v) {
-                isClicked = false;
-                while (!isClicked) {
-                    tempo = Integer.valueOf(TempoInput.getText().toString());
-                    playTick.start();
-                    SystemClock.sleep((long) calcInterval(tempo));
-                    //showToast(String.valueOf(calcInterval(tempo)));
-                }
-            }
-        });
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if (isChecked) {
+                    startThread();
+                } else {
 
-        stopBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                isClicked = true;
+                }
             }
         });
 
@@ -89,6 +82,31 @@ public class MainActivity extends AppCompatActivity {
             }
         } else {
             return (60 / tempo) * 1000;
+        }
+    }
+
+    public void startThread() {
+        TickThread thread = new TickThread(playTick, tempo);
+        thread.start();
+    }
+
+    class TickThread extends Thread {
+        MediaPlayer playTick;
+        int tempo;
+
+        TickThread(MediaPlayer playTick, int tempo) {
+            this.playTick = playTick;
+            this.tempo = tempo;
+        }
+
+        @Override
+        public void run() {
+            while (true) {
+                tempo = Integer.valueOf(TempoInput.getText().toString());
+                playTick.start();
+                SystemClock.sleep((long) calcInterval(tempo));
+                //showToast(String.valueOf(calcInterval(tempo)));
+            }
         }
     }
 }
