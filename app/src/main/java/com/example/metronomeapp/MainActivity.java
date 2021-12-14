@@ -3,14 +3,13 @@ package com.example.metronomeapp;
 
 import android.media.MediaPlayer;
 import android.os.Bundle;
-import android.os.Handler;
 import android.os.SystemClock;
+import android.util.Log;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.widget.Button;
-import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.Toast;
-import android.widget.ToggleButton;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
@@ -27,17 +26,17 @@ public class MainActivity extends AppCompatActivity {
 
     EditText TempoInput;
 
-    ToggleButton startStopBtn;
+    Button startBtn, stopBtn;
 
-    boolean doRun = false;
+    Thread thread;
 
-    private Handler handler = new Handler();
+    boolean doRun, isClicked = true;
+
+    final MediaPlayer playTick = MediaPlayer.create(this, R.raw.tick);
 
     public MainActivity() {
         super(R.layout.fragment_dashboard);
     }
-
-    final MediaPlayer playTick = MediaPlayer.create(this, R.raw.tick);
 
     private ActivityMainBinding binding;
 
@@ -47,20 +46,48 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         binding = ActivityMainBinding.inflate(getLayoutInflater());
 
-        startStopBtn = findViewById(R.id.startStopBtn);
+        TempoInput = findViewById(R.id.TempoInput);
 
+        startBtn = findViewById(R.id.startButton);
+        stopBtn = findViewById(R.id.stopButton);
+
+        thread = null;
         BottomNavigationView navView = findViewById(R.id.nav_view);
         // Passing each menu ID as a set of Ids because each
         // menu should be considered as top level destinations.
         AppBarConfiguration appBarConfiguration = new AppBarConfiguration.Builder(R.id.navigation_home, R.id.navigation_dashboard, R.id.navigation_notifications).build();
 
-        startStopBtn.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+        startBtn.setOnClickListener(new OnClickListener() {
             @Override
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                if (isChecked) {
-                    startThread();
-                } else {
+            public void onClick(View v) {
+                thread = new Thread(new Runnable() {
+                    @Override
+                    public void run() {
+                        while (true) {
+                            tempo = Integer.valueOf(TempoInput.getText().toString());
+                            try {
+                                Thread.sleep(tempo);
+                                playTick.start();
+                                Log.d("time", "run: ");
+                            } catch (InterruptedException e) {
+                                e.printStackTrace();
+                            }
+                        }
+                    }
+                });
+                thread.start();
+            }
+        });
 
+        stopBtn.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(thread != null) {
+                    try {
+                        thread.interrupt();
+                    } catch (Exception e) {
+
+                    }
                 }
             }
         });
@@ -82,31 +109,6 @@ public class MainActivity extends AppCompatActivity {
             }
         } else {
             return (60 / tempo) * 1000 - tempo/25;
-        }
-    }
-
-    public void startThread() {
-        TickThread thread = new TickThread(playTick, tempo);
-        thread.start();
-    }
-
-    class TickThread extends Thread {
-        MediaPlayer playTick;
-        int tempo;
-
-        TickThread(MediaPlayer playTick, int tempo) {
-            this.playTick = playTick;
-            this.tempo = tempo;
-        }
-
-        @Override
-        public void run() {
-            while (true) {
-                tempo = Integer.valueOf(TempoInput.getText().toString());
-                playTick.start();
-                SystemClock.sleep((long) calcInterval(tempo));
-                //showToast(String.valueOf(calcInterval(tempo)));
-            }
         }
     }
 }

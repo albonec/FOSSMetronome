@@ -50,18 +50,32 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <ToggleButton
-        android:id="@+id/startStopBtn"
-        android:layout_width="358dp"
-        android:layout_height="198dp"
-        android:layout_marginStart="26dp"
-        android:layout_marginTop="522dp"
-        android:layout_marginEnd="27dp"
-        android:layout_marginBottom="11dp"
-        android:text="ToggleButton"
+    <Button
+        android:id="@+id/startButton"
+        android:layout_width="127dp"
+        android:layout_height="261dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="461dp"
+        android:layout_marginEnd="268dp"
+        android:layout_marginBottom="9dp"
+        android:text="Start"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="1.0" />
+
+    <Button
+        android:id="@+id/stopButton"
+        android:layout_width="127dp"
+        android:layout_height="261dp"
+        android:layout_marginStart="268dp"
+        android:layout_marginTop="464dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginBottom="7dp"
+        android:text="Stop"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="1.0" />
