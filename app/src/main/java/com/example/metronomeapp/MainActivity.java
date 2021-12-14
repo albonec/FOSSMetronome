@@ -57,37 +57,28 @@ public class MainActivity extends AppCompatActivity {
         // menu should be considered as top level destinations.
         AppBarConfiguration appBarConfiguration = new AppBarConfiguration.Builder(R.id.navigation_home, R.id.navigation_dashboard, R.id.navigation_notifications).build();
 
-        startBtn.setOnClickListener(new OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                thread = new Thread(new Runnable() {
-                    @Override
-                    public void run() {
-                        while (true) {
-                            tempo = Integer.valueOf(TempoInput.getText().toString());
-                            try {
-                                Thread.sleep(tempo);
-                                playTick.start();
-                                Log.d("time", "run: ");
-                            } catch (InterruptedException e) {
-                                e.printStackTrace();
-                            }
-                        }
+        startBtn.setOnClickListener(v -> {
+            thread = new Thread(() -> {
+                while (true) {
+                    tempo = Integer.valueOf(TempoInput.getText().toString());
+                    try {
+                        Thread.sleep(tempo);
+                        playTick.start();
+                        Log.d("time", "run: ");
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
                     }
-                });
-                thread.start();
-            }
+                }
+            });
+            thread.start();
         });
 
-        stopBtn.setOnClickListener(new OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if(thread != null) {
-                    try {
-                        thread.interrupt();
-                    } catch (Exception e) {
-
-                    }
+        stopBtn.setOnClickListener(v -> {
+            if(thread != null) {
+                try {
+                    thread.interrupt();
+                } catch (Exception e) {
+                    e.printStackTrace();
                 }
             }
         });
