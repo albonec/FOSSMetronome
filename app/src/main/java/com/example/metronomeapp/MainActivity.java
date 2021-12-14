@@ -81,7 +81,7 @@ public class MainActivity extends AppCompatActivity {
                 return ((60 / tempo) * 1000) - 10;
             }
         } else {
-            return (60 / tempo) * 1000;
+            return (60 / tempo) * 1000 - tempo/25;
         }
     }
 
