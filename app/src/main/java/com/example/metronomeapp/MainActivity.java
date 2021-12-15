@@ -7,6 +7,7 @@ import android.os.SystemClock;
 import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
@@ -33,6 +34,7 @@ public class MainActivity extends AppCompatActivity {
     boolean doRun, isClicked = true;
 
     final MediaPlayer playTick = MediaPlayer.create(this, R.raw.tick);
+    final MediaPlayer playA4 = MediaPlayer.create(this, R.raw.A);
 
     public MainActivity() {
         super(R.layout.fragment_dashboard);
@@ -44,6 +46,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
         binding = ActivityMainBinding.inflate(getLayoutInflater());
 
         TempoInput = findViewById(R.id.TempoInput);
@@ -59,8 +62,9 @@ public class MainActivity extends AppCompatActivity {
 
         startBtn.setOnClickListener(v -> {
             thread = new Thread(() -> {
+                tempo = Integer.valueOf(TempoInput.getText().toString());
+                if(tempo == 440) {playA4.start();}
                 while (true) {
-                    tempo = Integer.valueOf(TempoInput.getText().toString());
                     try {
                         Thread.sleep(tempo);
                         playTick.start();
