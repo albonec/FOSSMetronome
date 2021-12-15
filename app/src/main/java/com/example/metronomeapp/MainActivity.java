@@ -34,7 +34,7 @@ public class MainActivity extends AppCompatActivity {
     boolean doRun, isClicked = true;
 
     final MediaPlayer playTick = MediaPlayer.create(this, R.raw.tick);
-    final MediaPlayer playA4 = MediaPlayer.create(this, R.raw.A);
+    final MediaPlayer playA4 = MediaPlayer.create(this, R.raw.a);
 
     public MainActivity() {
         super(R.layout.fragment_dashboard);
