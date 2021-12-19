@@ -18,12 +18,13 @@ import com.example.metronomeapp.databinding.FragmentDashboardBinding;
 
 public class DashboardFragment extends Fragment {
 
-    private DashboardViewModel dashboardViewModel;
+
     private FragmentDashboardBinding binding;
 
     @Override
     public View onCreateView(LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
+        DashboardViewModel dashboardViewModel;
         dashboardViewModel =
                 new ViewModelProvider(this).get(DashboardViewModel.class);
 

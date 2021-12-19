@@ -3,6 +3,9 @@ package com.example.metronomeapp;
 
 import android.media.MediaPlayer;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.HandlerThread;
+import android.os.Message;
 import android.os.SystemClock;
 import android.util.Log;
 import android.view.View;
@@ -29,8 +32,6 @@ public class MainActivity extends AppCompatActivity {
 
     Button startBtn, stopBtn;
 
-    Thread thread;
-
     boolean doRun, isClicked = true;
 
     final MediaPlayer playTick = MediaPlayer.create(this, R.raw.tick);
@@ -41,6 +42,8 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private ActivityMainBinding binding;
+
+    HandlerThread thread;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,37 +57,26 @@ public class MainActivity extends AppCompatActivity {
         startBtn = findViewById(R.id.startButton);
         stopBtn = findViewById(R.id.stopButton);
 
-        thread = null;
         BottomNavigationView navView = findViewById(R.id.nav_view);
         // Passing each menu ID as a set of Ids because each
         // menu should be considered as top level destinations.
         AppBarConfiguration appBarConfiguration = new AppBarConfiguration.Builder(R.id.navigation_home, R.id.navigation_dashboard, R.id.navigation_notifications).build();
 
         startBtn.setOnClickListener(v -> {
-            thread = new Thread(() -> {
-                tempo = Integer.valueOf(TempoInput.getText().toString());
-                if(tempo == 440) {playA4.start();}
-                while (true) {
-                    try {
-                        Thread.sleep(tempo);
-                        playTick.start();
-                        Log.d("time", "run: ");
-                    } catch (InterruptedException e) {
-                        e.printStackTrace();
-                    }
-                }
-            });
+            thread = new HandlerThread("thread");
             thread.start();
+            Handler handler = new Handler(thread.getLooper()){
+                @Override
+                public void handleMessage(Message msg)
+                {
+                    super.handleMessage(msg);
+                }
+            };
+            handler.post(runnable);
         });
 
         stopBtn.setOnClickListener(v -> {
-            if(thread != null) {
-                try {
-                    thread.interrupt();
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-            }
+            thread.quit();
         });
 
     }
@@ -106,5 +98,16 @@ public class MainActivity extends AppCompatActivity {
             return (60 / tempo) * 1000 - tempo/25;
         }
     }
+
+    Runnable runnable = new Runnable() {
+        @Override
+        public void run() {
+            while(true) {
+                playTick.start();
+                SystemClock.sleep((long)calcInterval(tempo));
+            }
+        }
+    };
+
 }
 

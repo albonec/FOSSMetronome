@@ -17,11 +17,10 @@ import com.example.metronomeapp.databinding.FragmentHomeBinding;
 
 public class HomeFragment extends Fragment {
 
-    private HomeViewModel homeViewModel;
     private FragmentHomeBinding binding;
-
     public View onCreateView(LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
+        HomeViewModel homeViewModel;
         homeViewModel =
                 new ViewModelProvider(this).get(HomeViewModel.class);
 

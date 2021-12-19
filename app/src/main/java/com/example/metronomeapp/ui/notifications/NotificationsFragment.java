@@ -17,11 +17,11 @@ import com.example.metronomeapp.databinding.FragmentNotificationsBinding;
 
 public class NotificationsFragment extends Fragment {
 
-    private NotificationsViewModel notificationsViewModel;
     private FragmentNotificationsBinding binding;
 
     public View onCreateView(LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
+        NotificationsViewModel notificationsViewModel;
         notificationsViewModel =
                 new ViewModelProvider(this).get(NotificationsViewModel.class);
 
