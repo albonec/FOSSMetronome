@@ -1,6 +1,7 @@
 package com.example.metronomeapp;
 
 
+import android.content.Context;
 import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.os.Handler;
@@ -57,11 +58,6 @@ public class MainActivity extends AppCompatActivity {
         startBtn = findViewById(R.id.startButton);
         stopBtn = findViewById(R.id.stopButton);
 
-        BottomNavigationView navView = findViewById(R.id.nav_view);
-        // Passing each menu ID as a set of Ids because each
-        // menu should be considered as top level destinations.
-        AppBarConfiguration appBarConfiguration = new AppBarConfiguration.Builder(R.id.navigation_home, R.id.navigation_dashboard, R.id.navigation_notifications).build();
-
         startBtn.setOnClickListener(v -> {
             thread = new HandlerThread("thread");
             thread.start();
@@ -83,7 +79,7 @@ public class MainActivity extends AppCompatActivity {
 
     //Debug function to show text when necessary
     public void showToast(String text) {
-        Toast.makeText(MainActivity.this, text, Toast.LENGTH_SHORT).show();
+        Toast.makeText(getBaseContext(), text, Toast.LENGTH_SHORT).show();
     }
 
     //calculates interval (in milliseconds) at which to play the metronome tick based on tempo in BPM units.
@@ -108,6 +104,11 @@ public class MainActivity extends AppCompatActivity {
             }
         }
     };
+
+    @Override
+    protected void attachBaseContext(Context newBase) {
+
+    }
 
 }
 
