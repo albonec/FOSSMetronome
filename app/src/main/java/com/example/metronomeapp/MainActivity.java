@@ -40,8 +40,6 @@ public class MainActivity extends AppCompatActivity {
 
     private ActivityMainBinding binding;
 
-    HandlerThread thread;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         Button startBtn, stopBtn;
@@ -56,20 +54,12 @@ public class MainActivity extends AppCompatActivity {
         stopBtn = findViewById(R.id.stopButton);
 
         startBtn.setOnClickListener(v -> {
-            thread = new HandlerThread("thread");
+            TickThread thread = new TickThread(playTick, playA4, (long)calcInterval(tempo), TempoInput);
             thread.start();
-            Handler handler = new Handler(thread.getLooper()){
-                @Override
-                public void handleMessage(Message msg)
-                {
-                    super.handleMessage(msg);
-                }
-            };
-            handler.post(runnable);
         });
 
         stopBtn.setOnClickListener(v -> {
-            thread.quit();
+
         });
 
     }
@@ -91,22 +81,5 @@ public class MainActivity extends AppCompatActivity {
             return (60 / tempo) * 1000 - tempo/25;
         }
     }
-
-    Runnable runnable = new Runnable() {
-        @Override
-        public void run() {
-            tempo = Integer.valueOf(TempoInput.getText().toString());
-            while(true) {
-                playTick.start();
-                SystemClock.sleep((long)calcInterval(tempo));
-            }
-        }
-    };
-
-    @Override
-    protected void attachBaseContext(Context newBase) {
-
-    }
-
 }
 
