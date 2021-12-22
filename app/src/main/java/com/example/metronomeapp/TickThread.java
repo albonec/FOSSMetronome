@@ -19,11 +19,11 @@ public class TickThread extends Thread implements Runnable {
 
     @Override
     public void run() {
-        tempo = Integer.valueOf(TempoInput.getText().toString());
         if(tempo == 440) {
             playA4.start();
         }
         while(!isInterrupted()) {
+            tempo = Integer.valueOf(TempoInput.getText().toString());
             playTick.start();
             SystemClock.sleep(tempo);
         }

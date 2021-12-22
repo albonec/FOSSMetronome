@@ -52,14 +52,15 @@ public class MainActivity extends AppCompatActivity {
 
         startBtn = findViewById(R.id.startButton);
         stopBtn = findViewById(R.id.stopButton);
+        TickThread thread = new TickThread(playTick, playA4, (long)calcInterval(tempo), TempoInput);
 
         startBtn.setOnClickListener(v -> {
-            TickThread thread = new TickThread(playTick, playA4, (long)calcInterval(tempo), TempoInput);
             thread.start();
+            thread.run();
         });
 
         stopBtn.setOnClickListener(v -> {
-
+            thread.interrupt();
         });
 
     }
