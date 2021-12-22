@@ -31,15 +31,11 @@ public class MainActivity extends AppCompatActivity {
 
     EditText TempoInput;
 
-    Button startBtn, stopBtn;
-
-    boolean doRun, isClicked = true;
-
     final MediaPlayer playTick = MediaPlayer.create(this, R.raw.tick);
     final MediaPlayer playA4 = MediaPlayer.create(this, R.raw.a);
 
     public MainActivity() {
-        super(R.layout.fragment_dashboard);
+        super(R.layout.activity_main);
     }
 
     private ActivityMainBinding binding;
@@ -48,6 +44,7 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        Button startBtn, stopBtn;
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
@@ -98,6 +95,7 @@ public class MainActivity extends AppCompatActivity {
     Runnable runnable = new Runnable() {
         @Override
         public void run() {
+            tempo = Integer.valueOf(TempoInput.getText().toString());
             while(true) {
                 playTick.start();
                 SystemClock.sleep((long)calcInterval(tempo));
