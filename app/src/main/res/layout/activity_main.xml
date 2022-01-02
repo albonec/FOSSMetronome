@@ -44,7 +44,7 @@
         android:layout_marginTop="243dp"
         android:layout_marginEnd="125dp"
         android:layout_marginBottom="580dp"
-        android:text="AGB's Metronome App"
+        android:text="       AGB's Metronome"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -52,9 +52,9 @@
 
     <Button
         android:id="@+id/startButton"
-        android:layout_width="127dp"
-        android:layout_height="261dp"
-        android:layout_marginStart="16dp"
+        android:layout_width="115dp"
+        android:layout_height="220dp"
+        android:layout_marginStart="1dp"
         android:layout_marginTop="461dp"
         android:layout_marginEnd="268dp"
         android:layout_marginBottom="9dp"
@@ -67,11 +67,11 @@
 
     <Button
         android:id="@+id/stopButton"
-        android:layout_width="127dp"
-        android:layout_height="261dp"
+        android:layout_width="115dp"
+        android:layout_height="220dp"
         android:layout_marginStart="268dp"
         android:layout_marginTop="464dp"
-        android:layout_marginEnd="16dp"
+        android:layout_marginEnd="1dp"
         android:layout_marginBottom="7dp"
         android:text="Stop"
         app:layout_constraintBottom_toBottomOf="parent"
