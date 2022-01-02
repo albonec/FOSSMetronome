@@ -18,13 +18,6 @@ public class MainActivity extends AppCompatActivity {
     EditText TempoInput;
     long tempo;
 
-    public void setup() {
-        final MediaPlayer playTick = MediaPlayer.create(this, R.raw.tick);
-        final MediaPlayer playA4 = MediaPlayer.create(this, R.raw.a);
-        playTick.prepareAsync();
-        playA4.prepareAsync();
-    }
-
     public MainActivity() {
         super(R.layout.activity_main);
     }
@@ -33,7 +26,11 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        final MediaPlayer playTick = MediaPlayer.create(this, R.raw.tick);
+        final MediaPlayer playA4 = MediaPlayer.create(this, R.raw.a);
+
         Button startBtn, stopBtn;
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
@@ -42,7 +39,9 @@ public class MainActivity extends AppCompatActivity {
 
         startBtn = findViewById(R.id.startButton);
         stopBtn = findViewById(R.id.stopButton);
-        TickThread thread = new TickThread(tempo);
+
+        TickThread thread = new TickThread(tempo, playTick, playA4);
+
 
         startBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -64,7 +63,5 @@ public class MainActivity extends AppCompatActivity {
     public void showToast(String text) {
         Toast.makeText(getBaseContext(), text, Toast.LENGTH_SHORT).show();
     }
-
-    //calculates interval (in milliseconds) at which to play the metronome tick based on tempo in BPM units.
 }
 
