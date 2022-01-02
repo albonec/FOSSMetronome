@@ -61,7 +61,7 @@ public class MainActivity extends AppCompatActivity {
 
     //Debug function to show text when necessary
     public void showToast(String text) {
-        Toast.makeText(getBaseContext(), text, Toast.LENGTH_SHORT).show();
+        Toast.makeText(this, text, Toast.LENGTH_SHORT).show();
     }
 }
 
