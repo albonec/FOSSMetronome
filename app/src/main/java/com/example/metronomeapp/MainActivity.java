@@ -44,19 +44,17 @@ public class MainActivity extends AppCompatActivity {
         stopBtn = findViewById(R.id.stopButton);
         TickThread thread = new TickThread(tempo);
 
-        startBtn.setOnTouchListener(new View.OnTouchListener() {
+        startBtn.setOnClickListener(new View.OnClickListener() {
             @Override
-            public boolean onTouch(View v, MotionEvent event) {
+            public void onClick(View v) {
                 thread.start();
-                return true;
             }
         });
 
-        stopBtn.setOnTouchListener(new View.OnTouchListener() {
+        stopBtn.setOnClickListener(new View.OnClickListener() {
             @Override
-            public boolean onTouch(View v, MotionEvent event) {
+            public void onClick(View v) {
                 thread.interrupt();
-                return false;
             }
         });
 
