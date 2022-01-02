@@ -19,10 +19,11 @@ public class TickThread extends Thread {
     @Override
     public void run() {
         System.out.println("Thread started");
-        //mainActivity.setup();
         while(!isInterrupted()) {
             if(tempo == 440) {
                 playA4.start();
+                SystemClock.sleep(35000);
+                this.interrupt();
             } else {
                 playTick.start();
                 SystemClock.sleep((long) calcInterval(tempo));
