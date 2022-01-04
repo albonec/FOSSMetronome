@@ -27,19 +27,19 @@ public class TickThread extends Thread {
                 this.interrupt();
             } else {
                 playTick.start();
+                System.out.println((long) calcInterval(tempo));
                 SystemClock.sleep((long) calcInterval(tempo));
             }
         }
     }
 
     public float calcInterval(@NonNull long tempo) {
+        if (((60 / tempo) * 1000 - 10) <= 0) {
+            return 0;
+        }
         if (tempo >= 100) {
-            if (((60 / tempo) * 1000) <= 0) {
-                return 0;
-            } else {
                 return ((60 / tempo) * 1000) - 10;
-            }
-        } else {
+            } else {
             return (60 / tempo) * 1000 - tempo/25;
         }
     }
