@@ -15,14 +15,13 @@ import com.example.metronomeapp.databinding.ActivityMainBinding;
 
 public class MainActivity extends AppCompatActivity {
 
-    EditText TempoInput;
-    long tempo;
-
     public MainActivity() {
         super(R.layout.activity_main);
     }
 
     private ActivityMainBinding binding;
+
+    EditText TempoInput;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,12 +34,11 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
         binding = ActivityMainBinding.inflate(getLayoutInflater());
-        TempoInput = findViewById(R.id.TempoInput);
 
         startBtn = findViewById(R.id.startButton);
         stopBtn = findViewById(R.id.stopButton);
 
-        TickThread thread = new TickThread(tempo, playTick, playA4);
+        TickThread thread = new TickThread(playTick, playA4, findViewById(R.id.TempoInput));
 
 
         startBtn.setOnClickListener(new View.OnClickListener() {

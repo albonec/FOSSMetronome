@@ -8,16 +8,17 @@ import androidx.annotation.NonNull;
 public class TickThread extends Thread {
     MediaPlayer playTick;
     MediaPlayer playA4;
-    long tempo;
+    EditText TempoInput;
 
-    public TickThread(long tempo, MediaPlayer playTick, MediaPlayer playA4) {
-        this.tempo = tempo;
+    public TickThread(MediaPlayer playTick, MediaPlayer playA4, EditText TempoInput) {
         this.playA4 = playA4;
         this.playTick = playTick;
+        this.TempoInput = TempoInput;
     }
 
     @Override
     public void run() {
+        long tempo = Integer.valueOf(TempoInput.getText().toString());
         System.out.println("Thread started");
         while(!isInterrupted()) {
             if(tempo == 440) {
