@@ -33,13 +33,14 @@ public class TickThread extends Thread {
         }
     }
 
-    public float calcInterval(@NonNull long tempo) {
-        if (((60 / tempo) * 1000 - 10) <= 0) {
-            return 0;
-        }
+    public float calcInterval(@NonNull float tempo) {
         if (tempo >= 100) {
-                return ((60 / tempo) * 1000) - 10;
+            if (((60 / tempo) * 1000) <= 0) {
+                return 0;
             } else {
+                return ((60 / tempo) * 1000) - 10;
+            }
+        } else {
             return (60 / tempo) * 1000 - tempo/25;
         }
     }
