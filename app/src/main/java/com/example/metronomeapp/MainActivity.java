@@ -15,14 +15,15 @@ import com.example.metronomeapp.databinding.ActivityMainBinding;
 
 public class MainActivity extends AppCompatActivity {
 
-    EditText TempoInput;
-    long tempo;
-
     public MainActivity() {
         super(R.layout.activity_main);
     }
 
     private ActivityMainBinding binding;
+
+    EditText TempoInput;
+
+    boolean wasClicked = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,25 +36,30 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
         binding = ActivityMainBinding.inflate(getLayoutInflater());
-        TempoInput = findViewById(R.id.TempoInput);
 
         startBtn = findViewById(R.id.startButton);
         stopBtn = findViewById(R.id.stopButton);
-
-        TickThread thread = new TickThread(tempo, playTick, playA4);
+        final TickThread[] thread = new TickThread[1];
 
 
         startBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                thread.start();
+                if (wasClicked) {
+                    thread[0].interrupt();
+                    wasClicked = false;
+                } else {
+                    thread[0] = new TickThread(playTick, playA4, findViewById(R.id.TempoInput));
+                    thread[0].start();
+                    wasClicked = true;
+                }
             }
         });
 
         stopBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                thread.interrupt();
+//                thread.interrupt();
             }
         });
 
@@ -61,7 +67,7 @@ public class MainActivity extends AppCompatActivity {
 
     //Debug function to show text when necessary
     public void showToast(String text) {
-        Toast.makeText(getBaseContext(), text, Toast.LENGTH_SHORT).show();
+        Toast.makeText(this, text, Toast.LENGTH_SHORT).show();
     }
 }
 
