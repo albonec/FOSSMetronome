@@ -30,36 +30,30 @@ public class MainActivity extends AppCompatActivity {
         final MediaPlayer playTick = MediaPlayer.create(this, R.raw.tick);
         final MediaPlayer playA4 = MediaPlayer.create(this, R.raw.a);
 
-        Button startBtn, stopBtn;
+        Button startStopBtn;
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
         binding = ActivityMainBinding.inflate(getLayoutInflater());
 
-        startBtn = findViewById(R.id.startButton);
-        stopBtn = findViewById(R.id.stopButton);
+        startStopBtn = findViewById(R.id.startStopButton);
         final TickThread[] thread = new TickThread[1];
 
 
-        startBtn.setOnClickListener(new View.OnClickListener() {
+        startStopBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if (wasClicked) {
                     thread[0].interrupt();
                     wasClicked = false;
+                    startStopBtn.setText("START");
                 } else {
                     thread[0] = new TickThread(playTick, playA4, findViewById(R.id.TempoInput));
                     thread[0].start();
                     wasClicked = true;
+                    startStopBtn.setText("STOP");
                 }
-            }
-        });
-
-        stopBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-//                thread.interrupt();
             }
         });
 
