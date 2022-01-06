@@ -11,6 +11,12 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 import com.example.metronomeapp.databinding.ActivityMainBinding;
 
+/**
+ * Class that defines the actions of the main or UI thread, thus handling all the parts of the app
+ * the user interacts with.
+ *
+ * Also manages creation, execution, and destruction of threads doing the long-running work.
+ */
 
 public class MainActivity extends AppCompatActivity {
 
@@ -19,8 +25,6 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private ActivityMainBinding binding;
-
-    EditText TempoInput;
 
     boolean wasClicked = false;
 
@@ -48,7 +52,7 @@ public class MainActivity extends AppCompatActivity {
                     wasClicked = false;
                     startStopBtn.setText("START");
                 } else {
-                    thread[0] = new TickThread(playTick, playA4, findViewById(R.id.TempoInput));
+                    thread[0] = new TickThread(playTick, playA4, findViewById(R.id.TempoInput)); //using direct assignment rather than variable reference for less confusion.
                     thread[0].start();
                     wasClicked = true;
                     startStopBtn.setText("STOP");
