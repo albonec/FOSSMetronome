@@ -26,7 +26,7 @@
 
     <TextView
         android:id="@+id/name"
-        android:layout_width="162dp"
+        android:layout_width="0dp"
         android:layout_height="46dp"
         android:layout_marginStart="124dp"
         android:layout_marginTop="243dp"
@@ -40,13 +40,14 @@
 
     <Button
             android:id="@+id/startStopButton"
-            android:layout_width="380dp"
+            android:layout_width="0dp"
             android:layout_height="150dp"
-            android:layout_marginStart="1dp"
+            android:layout_marginStart="15dp"
             android:layout_marginTop="461dp"
             android:layout_marginEnd="15dp"
-            android:layout_marginBottom="15dp"
-            android:text="Start"
+            android:layout_marginBottom="30dp"
+            android:text="START"
+            android:textSize="20sp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
