@@ -31,8 +31,6 @@ public class TickThread extends Thread {
         while(!isInterrupted()) {
             if(tempo == 440) {
                 playA4.start();
-                SystemClock.sleep(35000);
-                this.interrupt();
             } else {
                 playTick.start();
                 //System.out.println((long) calcInterval(tempo));
