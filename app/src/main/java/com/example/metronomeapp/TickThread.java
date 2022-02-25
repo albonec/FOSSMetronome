@@ -46,10 +46,10 @@ public class TickThread extends Thread {
             if (((60 / tempo) * 1000) <= 0) {
                 return 0;
             } else {
-                return ((60 / tempo) * 1000) - 10;
+                return ((60 / tempo) * 1000) - 2;
             }
         } else {
-            return (60 / tempo) * 1000 - tempo/25;
+            return ((60 / tempo) * 1000) - 2;
         }
     }
 
