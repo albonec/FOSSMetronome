@@ -5,46 +5,56 @@
                                                    android:layout_width="match_parent"
                                                    android:layout_height="match_parent">
     <TextView
-            android:layout_width="167dp"
+            android:layout_width="168dp"
             android:layout_height="88dp" android:id="@+id/TitleTuner"
             android:text="Violin Tuner"
             android:textSize="40sp"
             app:layout_constraintTop_toTopOf="parent"
-            android:layout_marginTop="105dp"
+            android:layout_marginTop="181dp" android:layout_marginEnd="92dp" app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintBottom_toTopOf="@+id/EButton" app:layout_constraintStart_toStartOf="parent"
-            android:layout_marginStart="155dp" android:layout_marginEnd="89dp"
-            app:layout_constraintEnd_toEndOf="parent"/>
+            android:layout_marginStart="151dp"/>
     <Button
             android:text="E STRING (659hz)"
             android:layout_width="154dp"
             android:layout_height="117dp" android:id="@+id/EButton"
-            app:layout_constraintStart_toStartOf="parent" android:layout_marginStart="42dp"
-            android:layout_marginTop="212dp" app:layout_constraintTop_toBottomOf="@+id/TitleTuner"
-            app:layout_constraintEnd_toStartOf="@+id/AButton" android:layout_marginEnd="26dp"
-            android:layout_marginBottom="60dp" app:layout_constraintBottom_toTopOf="@+id/DButton"/>
+            android:layout_marginBottom="14dp"
+            app:layout_constraintBottom_toTopOf="@+id/DButton" app:layout_constraintStart_toStartOf="parent"
+            android:layout_marginTop="188dp"
+            app:layout_constraintTop_toBottomOf="@+id/TitleTuner" app:layout_constraintEnd_toStartOf="@+id/AButton"
+            android:layout_marginStart="55dp"/>
     <Button
             android:text="A String (440hz)"
             android:layout_width="154dp"
             android:layout_height="117dp" android:id="@+id/AButton"
-            android:layout_marginTop="212dp"
-            app:layout_constraintTop_toBottomOf="@+id/TitleTuner"
-            app:layout_constraintStart_toEndOf="@+id/EButton" android:layout_marginEnd="35dp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintBottom_toTopOf="@+id/button4"/>
+            android:layout_marginTop="188dp"
+            app:layout_constraintTop_toBottomOf="@+id/TitleTuner" android:layout_marginBottom="14dp"
+            app:layout_constraintBottom_toTopOf="@+id/GButton" android:layout_marginStart="13dp"
+            app:layout_constraintStart_toEndOf="@+id/EButton"
+            app:layout_constraintEnd_toEndOf="parent" android:layout_marginEnd="60dp"/>
     <Button
             android:text="D String (293hz)"
             android:layout_width="154dp"
             android:layout_height="117dp" android:id="@+id/DButton"
-            app:layout_constraintTop_toBottomOf="@+id/EButton" app:layout_constraintStart_toStartOf="parent"
-            android:layout_marginStart="42dp" app:layout_constraintBottom_toBottomOf="parent"
-            android:layout_marginBottom="30dp" app:layout_constraintEnd_toStartOf="@+id/button4"
-            android:layout_marginEnd="26dp" app:layout_constraintHorizontal_bias="1.0"/>
+            app:layout_constraintStart_toStartOf="parent"
+            android:layout_marginStart="42dp"
+            app:layout_constraintTop_toBottomOf="@+id/EButton" app:layout_constraintEnd_toStartOf="@+id/GButton"
+            android:layout_marginEnd="13dp" app:layout_constraintBottom_toBottomOf="parent"
+            android:layout_marginBottom="26dp"/>
     <Button
             android:text="G String (196hz)"
             android:layout_width="154dp"
-            android:layout_height="117dp" android:id="@+id/button4"
-            app:layout_constraintStart_toEndOf="@+id/DButton"
-            app:layout_constraintBottom_toBottomOf="parent" android:layout_marginBottom="30dp"
-            android:layout_marginEnd="35dp" app:layout_constraintEnd_toEndOf="parent" android:layout_marginTop="60dp"
-            app:layout_constraintTop_toBottomOf="@+id/AButton"/>
+            android:layout_height="117dp" android:id="@+id/GButton"
+            app:layout_constraintTop_toBottomOf="@+id/AButton" android:layout_marginEnd="48dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/DButton" app:layout_constraintBottom_toBottomOf="parent"
+            android:layout_marginBottom="26dp"/>
+    <Button
+            android:text="Metronome"
+            android:layout_width="145dp"
+            android:layout_height="63dp" android:id="@+id/MainButton"
+            app:layout_constraintStart_toStartOf="parent" android:layout_marginStart="6dp"
+            app:layout_constraintEnd_toStartOf="@+id/TitleTuner" android:layout_marginEnd="55dp"
+            android:layout_marginBottom="265dp" app:layout_constraintBottom_toTopOf="@+id/EButton"
+            app:layout_constraintTop_toTopOf="parent" android:layout_marginTop="93dp"
+            app:layout_constraintHorizontal_bias="0.0" app:layout_constraintVertical_bias="0.0"/>
 </androidx.constraintlayout.widget.ConstraintLayout>

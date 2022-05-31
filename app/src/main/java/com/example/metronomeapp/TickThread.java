@@ -29,13 +29,9 @@ public class TickThread extends Thread {
         long tempo = Integer.valueOf(TempoInput.getText().toString());
         //System.out.println("Thread started");
         while(!isInterrupted()) {
-            if(tempo == 440) {
-                playA4.start();
-            } else {
-                playTick.start();
-                //System.out.println((long) calcInterval(tempo));
-                SystemClock.sleep((long) calcInterval(tempo));
-            }
+            playTick.start();
+            //System.out.println((long) calcInterval(tempo));
+            SystemClock.sleep((long) calcInterval(tempo));
         }
     }
 

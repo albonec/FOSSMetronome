@@ -1,8 +1,11 @@
 package com.example.metronomeapp;
 
 
+import android.content.Intent;
+import android.gesture.Gesture;
 import android.media.MediaPlayer;
 import android.os.Bundle;
+import android.view.GestureDetector;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.Button;
@@ -33,7 +36,7 @@ public class MainActivity extends AppCompatActivity {
         final MediaPlayer playTick = MediaPlayer.create(this, R.raw.tick);
         final MediaPlayer playA4 = MediaPlayer.create(this, R.raw.a);
 
-        Button startStopBtn;
+        Button startStopBtn, TunerButton;
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
@@ -41,6 +44,7 @@ public class MainActivity extends AppCompatActivity {
         binding = ActivityMainBinding.inflate(getLayoutInflater());
 
         startStopBtn = findViewById(R.id.startStopButton);
+        TunerButton = findViewById(R.id.TunerButton);
         final TickThread[] thread = new TickThread[1];
 
 
@@ -57,6 +61,13 @@ public class MainActivity extends AppCompatActivity {
                     wasClicked = true;
                     startStopBtn.setText("STOP");
                 }
+            }
+        });
+
+        TunerButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(MainActivity.this, TunerActivity.class));
             }
         });
 
