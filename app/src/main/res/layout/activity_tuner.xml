@@ -8,7 +8,7 @@
             android:layout_width="168dp"
             android:layout_height="88dp" android:id="@+id/TitleTuner"
             android:text="Violin Tuner"
-            android:textSize="40sp"
+            android:textSize="36sp"
             app:layout_constraintTop_toTopOf="parent"
             android:layout_marginTop="181dp" android:layout_marginEnd="92dp" app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintBottom_toTopOf="@+id/EButton" app:layout_constraintStart_toStartOf="parent"
