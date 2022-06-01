@@ -1,6 +1,9 @@
 package com.example.metronomeapp;
 
 import android.media.MediaPlayer;
+import android.os.SystemClock;
+
+import java.io.IOException;
 
 public class TunerThread extends Thread {
     MediaPlayer string;
@@ -9,10 +12,9 @@ public class TunerThread extends Thread {
 
     @Override
     public void run() {
-        if(!isInterrupted()) {
+        while(!isInterrupted()) {
             string.start();
-        } else {
-            string.stop();
+            this.interrupt();
         }
     }
 }
