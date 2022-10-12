@@ -1,5 +1,5 @@
 # MetronomeApp
-Android Metronome App for musicians
+Android Metronome/Tuner App for musicians
 
 Chief developer: albonec
 
