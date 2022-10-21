@@ -29,6 +29,8 @@ public class  MainActivity extends AppCompatActivity {
 
     private ActivityMainBinding binding;
 
+    private static MainActivity mainActivity = new MainActivity();
+
     boolean wasClicked = false;
 
     @Override
@@ -74,8 +76,8 @@ public class  MainActivity extends AppCompatActivity {
     }
 
     //Debug function to show text when necessary
-    public void showToast(String text) {
-        Toast.makeText(this, text, Toast.LENGTH_SHORT).show();
+    public static void showToast(String text) {
+        Toast.makeText(mainActivity, text, Toast.LENGTH_SHORT).show();
     }
 }
 

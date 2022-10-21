@@ -2,6 +2,7 @@ package com.example.metronomeapp;
 
 import android.media.MediaPlayer;
 import android.os.SystemClock;
+import android.util.Log;
 import android.widget.EditText;
 import androidx.annotation.NonNull;
 
@@ -27,7 +28,7 @@ public class TickThread extends Thread {
 
     @Override
     public void run() {
-        long tempo = Integer.valueOf(TempoInput.getText().toString());
+        int tempo = Integer.valueOf(TempoInput.getText().toString());
         //System.out.println("Thread started");
         while(!isInterrupted()) {
             playTick.start();
@@ -38,8 +39,15 @@ public class TickThread extends Thread {
 
 
     //Math function that returns a pause interval in milliseconds given a desired pace in BPM.
-    public float calcInterval(@NonNull float tempo) {
-        return ((60 / tempo) * 1000) - TICK_LENGTH;
+    public float calcInterval(int tempo) throws NullPointerException {
+        try {
+            return ((60 / tempo) * 1000) - TICK_LENGTH;
+        }catch (NullPointerException e) {
+            Log.e("Thread Exception", String.valueOf(e.getStackTrace()));
+            MainActivity.showToast("Please enter desired BPM in the field");
+            this.interrupt();
+        }
+        return 0.0f;
     }
 
 }
