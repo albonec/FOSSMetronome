@@ -14,6 +14,7 @@ import androidx.annotation.NonNull;
  */
 
 public class TickThread extends Thread {
+    private static final int TICK_LENGTH = 54;
     MediaPlayer playTick;
     MediaPlayer playA4;
     EditText TempoInput;
@@ -38,15 +39,7 @@ public class TickThread extends Thread {
 
     //Math function that returns a pause interval in milliseconds given a desired pace in BPM.
     public float calcInterval(@NonNull float tempo) {
-        if (tempo >= 100) {
-            if (((60 / tempo) * 1000) <= 0) {
-                return 0;
-            } else {
-                return ((60 / tempo) * 1000) - 2;
-            }
-        } else {
-            return ((60 / tempo) * 1000) - 2;
-        }
+        return ((60 / tempo) * 1000) - TICK_LENGTH;
     }
 
 }

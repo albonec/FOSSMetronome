@@ -21,7 +21,7 @@ import com.example.metronomeapp.databinding.ActivityMainBinding;
  * Also manages creation, execution, and destruction of threads doing the long-running work.
  */
 
-public class MainActivity extends AppCompatActivity {
+public class  MainActivity extends AppCompatActivity {
 
     public MainActivity() {
         super(R.layout.activity_main);
