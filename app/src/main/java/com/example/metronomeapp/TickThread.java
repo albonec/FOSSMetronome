@@ -41,7 +41,7 @@ public class TickThread extends Thread {
     //Math function that returns a pause interval in milliseconds given a desired pace in BPM.
     public float calcInterval(int tempo) throws NullPointerException {
         try {
-            return ((60 / tempo) * 1000) - TICK_LENGTH;
+            return (60000/tempo);
         }catch (NullPointerException e) {
             Log.e("Thread Exception", String.valueOf(e.getStackTrace()));
             MainActivity.showToast("Please enter desired BPM in the field");
