@@ -1,2 +1,2 @@
 # FOSSMetronome
-Open source android metronome/tuner App for violinists
+Open source android metronome/tuner app for violinists
