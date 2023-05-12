@@ -1,2 +1,2 @@
 # MetronomeApp
-Android Metronome/Tuner App for violinists
+Open source android metronome/tuner App for violinists
