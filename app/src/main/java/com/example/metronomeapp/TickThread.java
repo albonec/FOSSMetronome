@@ -15,7 +15,6 @@ import androidx.annotation.NonNull;
  */
 
 public class TickThread extends Thread {
-    private static final int TICK_LENGTH = 54;
     MediaPlayer playTick;
     MediaPlayer playA4;
     EditText TempoInput;
@@ -29,10 +28,8 @@ public class TickThread extends Thread {
     @Override
     public void run() {
         int tempo = Integer.valueOf(TempoInput.getText().toString());
-        //System.out.println("Thread started");
         while(!isInterrupted()) {
             playTick.start();
-            //System.out.println((long) calcInterval(tempo));
             SystemClock.sleep((long) calcInterval(tempo));
         }
     }
