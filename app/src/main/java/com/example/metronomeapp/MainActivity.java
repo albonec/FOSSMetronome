@@ -36,7 +36,6 @@ public class  MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         final MediaPlayer playTick = MediaPlayer.create(this, R.raw.tick);
-        final MediaPlayer playA4 = MediaPlayer.create(this, R.raw.a);
 
         Button startStopBtn, TunerButton;
 
