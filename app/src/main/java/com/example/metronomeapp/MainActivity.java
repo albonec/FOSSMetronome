@@ -58,7 +58,7 @@ public class  MainActivity extends AppCompatActivity {
                     wasClicked = false;
                     startStopBtn.setText("START");
                 } else {
-                    thread[0] = new TickThread(playTick, playA4, findViewById(R.id.TempoInput)); //using direct assignment rather than variable reference for less confusion.
+                    thread[0] = new TickThread(playTick, findViewById(R.id.TempoInput)); //using direct assignment rather than variable reference for less confusion.
                     thread[0].start();
                     wasClicked = true;
                     startStopBtn.setText("STOP");

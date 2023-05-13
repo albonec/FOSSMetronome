@@ -16,11 +16,9 @@ import androidx.annotation.NonNull;
 
 public class TickThread extends Thread {
     MediaPlayer playTick;
-    MediaPlayer playA4;
     EditText TempoInput;
 
-    public TickThread(MediaPlayer playTick, MediaPlayer playA4, EditText TempoInput) {
-        this.playA4 = playA4;
+    public TickThread(MediaPlayer playTick, EditText TempoInput) {
         this.playTick = playTick;
         this.TempoInput = TempoInput;
     }
