@@ -14,13 +14,6 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 import com.example.metronomeapp.databinding.ActivityMainBinding;
 
-/**
- * Class that defines the actions of the main or UI thread, thus handling all the parts of the app
- * the user interacts with.
- *
- * Also manages creation, execution, and destruction of threads doing the long-running work.
- */
-
 public class  MainActivity extends AppCompatActivity {
 
     public MainActivity() {
