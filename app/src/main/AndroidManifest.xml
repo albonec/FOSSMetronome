@@ -4,8 +4,8 @@
     <application
         android:allowBackup="true"
         android:icon="@mipmap/appicon"
-        android:label="Metronome"
-        android:roundIcon="@mipmap/ic_launcher_round"
+        android:label="FOSSMetronome"
+        android:roundIcon="@mipmap/appicon_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.MetronomeApp">
         <activity
